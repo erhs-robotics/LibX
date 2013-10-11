@@ -66,7 +66,7 @@ public class NeuralNet {
                 }
                 //apply bias
                 sum += weights[i][j][nodesInLayers[i - 1]];
-                outputs[i][j] = MathX.sigmoid(sum);
+                outputs[i][j] = sigmoid(sum);
             }
 
         }
@@ -206,5 +206,9 @@ public class NeuralNet {
 
 
 
+    }
+
+    private double sigmoid(double n) {
+        return 1 / (1 + MathX.pow(Math.E, -n));
     }
 }
