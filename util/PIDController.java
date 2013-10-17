@@ -1,16 +1,16 @@
 package utils;
 
 
-public class PIDControllerX {
+public class PIDController {
 	
 	private double kp, ki, kd, setpoint;
 	private double lastError, totalError;
-	private boolean firstRun;
-	
-	private boolean capOutput = false;
 	private double minOutput, maxOutput;
+	private boolean firstRun;	
+	private boolean capOutput = false;
 	
-	public PIDControllerX(double kp, double ki, double kd) {
+	
+	public PIDController(double kp, double ki, double kd) {
 		this.kp = kp;
 		this.ki = ki;
 		this.kd = kd;
@@ -19,7 +19,7 @@ public class PIDControllerX {
 		this.firstRun = true;
 	}
 	
-	public PIDControllerX(double kp, double ki, double kd, double setpoint) {
+	public PIDController(double kp, double ki, double kd, double setpoint) {
 		this(kp, ki, kd);
 		this.setpoint = setpoint;
 	}
