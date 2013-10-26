@@ -1,6 +1,7 @@
-nbproject/
-resources/
-src/
-bin/
-build
+nbproject/*
+resources/*
+src/*
+bin/*
+build/*
+build.*
 BSD_License_for_WPILib_code.txt
