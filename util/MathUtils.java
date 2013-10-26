@@ -1,4 +1,4 @@
-package program.main;
+package utils;
 
 public class MathUtils {
 	
