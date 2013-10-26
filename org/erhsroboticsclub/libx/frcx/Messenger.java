@@ -1,4 +1,4 @@
-package frcx;
+package org.erhsroboticsclub.libx.frcx;
 
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.Timer;
