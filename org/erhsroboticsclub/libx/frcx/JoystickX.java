@@ -11,16 +11,17 @@ import edu.wpi.first.wpilibj.Joystick;
 public class JoystickX {
     
     private Joystick stick;
-    
-    boolean[] flags = new boolean[20];
-    boolean flag_trigger = false;
-    int throttle;
+    private final int MAX_BUTTON = 20;
+    private final int MAX_AXIS = 10;
+    private boolean[] flags = new boolean[MAX_BUTTON];
+    private boolean flag_trigger;
+    private double throttle;
     /**
-     * Without the javadoc I can't name these params properly
-     * @param arg0 the port, I'm assuming.
+     * Wrapper for the FRC Joystick Class 
+     * @param port
      */
-    public JoystickX(int arg0) {
-        stick = new Joystick(arg0);
+    public JoystickX(int port) {
+        stick = new Joystick(port);
     }
     
     /**
@@ -29,6 +30,7 @@ public class JoystickX {
      * @return if the button is currently being held down.
      */
     public boolean isButtonDown(int button) {
+        if(button >= MAX_BUTTON || button <= 0) return false;
         return stick.getRawButton(button);
     }
     
@@ -38,12 +40,13 @@ public class JoystickX {
      * @return whether the button has been pressed
      */
     public boolean buttonPressed(int button) {
-        if(isButtonDown(button) && !flags[button]) {
-            return (flags[button] = true);
+        if(button >= MAX_BUTTON || button <= 0) return false;
+        if(isButtonDown(button)) {
+            if(!flags[button]) 
+                return (flags[button] = true);
+            else return false;
         }
-        else {
-            return (flags[button] = false);
-        }
+        else return (flags[button] = false);
     }
     
     /**
@@ -52,6 +55,7 @@ public class JoystickX {
      * @return some sort of information about the axis
      */
     public double getAxis(int axis) {
+        if(axis >= MAX_AXIS || axis <= 0) return -1;
         return stick.getRawAxis(axis);
     }
     
@@ -105,8 +109,11 @@ public class JoystickX {
      *  but not again until after it is released.
      */
     public boolean getTriggerPressed() {
-        if(getTrigger() && !flag_trigger) 
-            return (flag_trigger = true);
+        if(getTrigger()) {
+            if(!flag_trigger) 
+                return (flag_trigger = true);
+            else return false;
+        }
         else return (flag_trigger = false);
     }
     

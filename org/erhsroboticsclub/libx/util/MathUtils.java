@@ -1,4 +1,4 @@
-package org.erhsroboticsclub.libx.utils;
+package org.erhsroboticsclub.libx.util;
 
 public class MathUtils {
 	
