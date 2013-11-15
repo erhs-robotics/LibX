@@ -27,7 +27,9 @@ public class Messenger {
     public Messenger() {
         driverLCD = DriverStationLCD.getInstance();
         msg = new String[LINE.length];
-        for (int i = 0; i < msg.length; i++) msg[i] = " ";
+        for (int i = 0; i < msg.length; i++) {
+            msg[i] = " ";
+        }
     }
 
     /**
@@ -70,13 +72,11 @@ public class Messenger {
      * Prints a message to a specific line on the Driver Station LCD
      *
      * @param s The String to be printed on the Driver Station
-     * @param line The line to print the message to as an int from [1, 6]
+     * @param line The line to print the message to
      */
-    public void printOnLn(String s, int i) {
-		i = Math.max(i - 1, 0);
-		i = Math.min(i, 5);
-        driverLCD.println(LINE[i], 1, EMPTY_SPACE);
-        driverLCD.println(LINE[i], 1, s);
+    public void printOnLn(String s, DriverStationLCD.Line line) {
+        driverLCD.println(line, 1, EMPTY_SPACE);
+        driverLCD.println(line, 1, s);
         driverLCD.updateLCD();
     }
 

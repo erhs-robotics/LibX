@@ -209,6 +209,7 @@ public class NeuralNet {
     }
 
     private double sigmoid(double n) {
-        return 1 / (1 + Math.pow(Math.E, -n));
+        return 0.0;
+        //return 1 / (1 + Math.pow(Math.E, -n));
     }
 }

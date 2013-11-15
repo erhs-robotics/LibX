@@ -24,6 +24,10 @@ public class JoystickX {
         stick = new Joystick(port);
     }
     
+    
+    public Joystick getFRCJoystick() {
+        return stick;
+    }
     /**
      * 
      * @param button
