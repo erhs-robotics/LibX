@@ -15,7 +15,7 @@ package org.erhsroboticsclub.libx.util;
 public class ArrayList {
 	
 	private boolean returnNull = false;
-	private int stepSize = 10;
+	private int step = 10;
 	
 	private Object[] array;
 	private int size = 0;
@@ -49,21 +49,24 @@ public class ArrayList {
 	}
 	
 	public void allocateSpace(int space) {
-		size += space;
-		Object[] newArray = new Object[size];
-		for(int i=0; i<size-1; i++) {
+		Object[] newArray = new Object[size+space];
+		for(int i=0; i<array.length; i++) {
 			newArray[i] = array[i];
 		}
 		array = newArray;
 	}
 	
 	private void deallocateSpace(int space) {
-		size -= space;
-		Object[] newArray = new Object[size];
+		Object[] newArray = new Object[size-space];
 		for(int i=0; i<newArray.length; i++) {
 			newArray[i] = array[i];
 		}
 		array = newArray;
+		if(size<array.length) size = array.length;
+	}
+	
+	public int getAllocatedSpace() {
+		return array.length;
 	}
 	
 	public int size() {
@@ -88,7 +91,7 @@ public class ArrayList {
 	
 	public void add(Object o) {
 		size++;
-		if(size=array.length)
+		if(size>=array.length)
 			allocateSpace(step);
 		array[size-1] = o;
 	}
@@ -98,14 +101,16 @@ public class ArrayList {
 			if(!returnNull) throw new ArrayIndexOutOfBoundsException();
 			return;
 		}
-		for(int i=index; i<size-1; i++) {
-			array[i] = array[i+1]; //Make sure this works;
+		for(int i=index; i<size; i++) {
+			array[i] = array[i+1];
 			
 		}
-		deallocateSpace[1]; //maybe not...
+		size--;
+		deallocateSpace(1); //maybe not...
 	}
 	
 	private boolean checkBounds(int index) {
-		if(index >= 0 && index < size) return true;
+		return (index >= 0 && index < size);
+		
 	}
 }
