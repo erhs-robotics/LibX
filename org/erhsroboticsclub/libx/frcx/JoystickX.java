@@ -8,9 +8,8 @@ import edu.wpi.first.wpilibj.Joystick;
  * 
  * @author David
  */
-public class JoystickX {
+public class JoystickX extends Joystick {
     
-    private Joystick stick;
     private final int MAX_BUTTON = 20;
     private final int MAX_AXIS = 10;
     private boolean[] flags = new boolean[MAX_BUTTON];
@@ -21,21 +20,17 @@ public class JoystickX {
      * @param port
      */
     public JoystickX(int port) {
-        stick = new Joystick(port);
+        super(port);
     }
     
-    
-    public Joystick getFRCJoystick() {
-        return stick;
-    }
     /**
-     * 
+     * Use instead of getRawButton()
      * @param button
      * @return if the button is currently being held down.
      */
     public boolean isButtonDown(int button) {
         if(button >= MAX_BUTTON || button <= 0) return false;
-        return stick.getRawButton(button);
+        return getRawButton(button);
     }
     
     /**
@@ -54,58 +49,31 @@ public class JoystickX {
     }
     
     /**
-     * 
+     * Use instead of getRawAxis
      * @param axis
      * @return some sort of information about the axis
      */
     public double getAxis(int axis) {
         if(axis >= MAX_AXIS || axis <= 0) return -1;
-        return stick.getRawAxis(axis);
+        return getRawAxis(axis);
     }
     
-    /**
-     * Thought this method might be useful
-     * @return Direction in degrees
-     */
-    public double getDirectionDeg() {
-        return stick.getDirectionDegrees();
-    }
-    /**
-     * Thought this method might be useful.
-     * @return Direction in radians
-     */
-    public double getDirectionRad() {
-        return stick.getDirectionRadians();
-    }
-    /**
-     * Thought this method might be useful.
-     * @return magnitude of the joystick
-     */
-    public double getMagnitude() {
-        return stick.getMagnitude();
-    }
     
     /**
      * @return position of the throttle
+	 * @Override
      */
     public double getThrottle() {
-        return (throttle = stick.getThrottle());
+        return (throttle = super.getThrottle());
     }
     /**
      * @return the difference between the current throttle and the value 
      *  recorded the last time getThrottle or getDeltaThrottle were called
      */
     public double getDeltaThrottle() {
-        double delta = stick.getThrottle() - throttle;
-        getThrottle();
+        double delta = super.getThrottle() - throttle;
+        this.getThrottle();
         return delta;
-    }
-    
-    /**
-     * @return true if the trigger is currently being pulled
-     */
-    public boolean getTrigger() {
-        return stick.getTrigger();
     }
     
     /**
@@ -121,22 +89,4 @@ public class JoystickX {
         else return (flag_trigger = false);
     }
     
-    /**
-     * @return the x value of the joystick
-     */
-    public double getX() {
-        return stick.getX();
-    }
-    /**
-     * @return the y value of the joystick
-     */
-    public double getY() {
-        return stick.getY();
-    }
-    /**
-     * @return the z value of the joystick
-     */
-    public double getZ() {
-        return stick.getZ();
-    }
 }
