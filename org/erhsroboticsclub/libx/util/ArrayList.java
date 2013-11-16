@@ -1,11 +1,5 @@
 package org.erhsroboticsclub.libx.util;
 
-/* TODO list
-- add ArrayList
-- add at index
-- step size
-
-*/
 
 /**
  * Making up for the sad deficiencies of FRC Java
@@ -239,6 +233,24 @@ public class ArrayList {
 		}
 		size--;
 		deallocateSpace(1); //maybe not...
+	}
+	
+	/**
+	 * Removes all elements between lBound (inclusive) and uBound (exclusive)
+	 * @param lBound lower bound (removed)
+	 * @param uBound upper bound (not removed)
+	 */
+	public void remove(int lBound, int uBound) {
+		if(!checkBounds(lBound) || !checkBounds(uBound-1) || lBound >= uBound) {
+			if(!returnNull) throw new ArrayIndexOutOfBoundsException();
+			return;
+		}
+		size -= (uBound-lBound);
+		for(int i=lBound; i<size; i++) {
+			array[i] = array[uBound + i-lBound];
+//			System.out.println("array[" + i + "] = " + array[i]);
+		}
+		
 	}
 	
 	/**
