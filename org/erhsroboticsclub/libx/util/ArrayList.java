@@ -2,7 +2,7 @@ package org.erhsroboticsclub.libx.util;
 
 /* TODO list
 - add ArrayList
-- add array
+- add at index
 - step size
 
 */
@@ -10,7 +10,7 @@ package org.erhsroboticsclub.libx.util;
 /**
  * Making up for the sad deficiencies of FRC Java
  *
- * @author David
+ * @author David Gardner
  */
 public class ArrayList {
 	
@@ -56,6 +56,16 @@ public class ArrayList {
 	public boolean willReturnNull() {
 		return returnNull;
 	}
+	
+	/**
+	 * Every time the array needs more space, it allocates step more spaces. 
+	 * @param step The default amount of spaces to allocate. Cannot be <= 0. 
+	 */
+	public void setStepSize(int step) {
+		if(step>0)
+			this.step = step;
+	}
+	
 	/**
 	 * A way to manually allocate more space to the array. This is automatically called
 	 *  when it no longer has enough spaces to append more elements, but could be used
@@ -79,6 +89,14 @@ public class ArrayList {
 		if(size<array.length) size = array.length;
 	}
 	
+	private Object[] prune() {
+		Object[] newArray = new Object[size];
+		for(int i=0; i<size; i++) {
+			newArray[i] = array[i];
+		}
+		return newArray;
+	}
+	
 	/**
 	 * Returns the amount of space allocated to the array, not the number of elements.
 	 * @see size()
@@ -94,6 +112,15 @@ public class ArrayList {
 	public int size() {
 		return size;
 	}
+	
+	/**
+	 * Converts to an Object array
+	 * @return this ArrayList as an Object[]
+	 */
+	public Object[] toArray() {
+		return this.prune();
+	}
+	
 	/**
 	 * Retrieves the object at the given index
 	 * @param index
@@ -142,6 +169,58 @@ public class ArrayList {
 			array[i] = o[i-size];
 		}
 		size += o.length;
+	}
+	
+	/**
+	 * Appends the given ArrayList to the end of the list. If not enough space is available,
+	 *  the size of the list plus 'step' spaces will be allocated
+	 * @param list The ArrayList to append.
+	 */
+	public void add(ArrayList list) {
+		if(size+list.size >= array.length) allocateSpace(list.size() + step);
+		for(int i=size; i<size+list.size(); i++) {
+			array[i] = list.get(i-size);
+		}
+		size += list.size();
+	}
+	
+	/**
+	 * Adds the given array starting at list[index] = o[0].
+	 *  Shifts everything past index over o.length spaces.
+	 * @param o The array to add
+	 * @param index The index at which to add it. 
+	 */
+	public void add(Object[] o, int index) {
+		if(!checkBounds(index)) {
+			if(!returnNull) throw new ArrayIndexOutOfBoundsException();
+			return;
+		}
+		if(size+o.length >= array.length) allocateSpace(o.length + step);
+		for(int i=size-1; i>=index; i--) { //shift
+			array[i+o.length] = array[i];
+		}
+		for(int i=index; i<index+o.length; i++) {
+			array[i] = o[i-index];
+		}
+	}
+	
+	/**
+	 * Adds the specified object to the specified index. All elements past the index are shifted over.
+	 * @param o the object to add
+	 * @param index the index at which to add it
+	 */
+	public void add(Object o, int index) {
+		add(new Object[] {o}, index);
+	}
+	
+	/**
+	 * Adds the given ArrayList starting at this[index] = list[0].
+	 *  Shifts everything past index over o.length spaces.
+	 * @param list The ArrayList to add
+	 * @param index The index at which to add it. 
+	 */
+	public void add(ArrayList list, int index) {
+		add(list.toArray(), index);
 	}
 	
 	/**
