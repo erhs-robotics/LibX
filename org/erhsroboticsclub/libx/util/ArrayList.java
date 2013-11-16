@@ -81,12 +81,12 @@ public class ArrayList {
 	}
 	
 	private void deallocateSpace(int space) {
-		Object[] newArray = new Object[size-space];
+		Object[] newArray = new Object[array.length-space];
 		for(int i=0; i<newArray.length; i++) {
 			newArray[i] = array[i];
 		}
 		array = newArray;
-		if(size<array.length) size = array.length;
+		if(size>array.length) size = array.length;
 	}
 	
 	private Object[] prune() {
@@ -196,12 +196,13 @@ public class ArrayList {
 			return;
 		}
 		if(size+o.length >= array.length) allocateSpace(o.length + step);
-		for(int i=size-1; i>=index; i--) { //shift
+		for(int i=size-1; i>=index; i--) {
 			array[i+o.length] = array[i];
 		}
 		for(int i=index; i<index+o.length; i++) {
 			array[i] = o[i-index];
 		}
+		size += o.length;
 	}
 	
 	/**
@@ -240,8 +241,32 @@ public class ArrayList {
 		deallocateSpace(1); //maybe not...
 	}
 	
+	/**
+	 * Removes all elements from the array and returns it to the state given by the default constructor.
+	 */
+	public void clear() {
+		array = new Object[10];
+		size = 0;
+	}
+	
+	/**
+	 * Conducts a linear search of the array for the specified object
+	 * @param o the object to locate
+	 * @return The index of the specified object or -1 if it is not found.
+	 */
+	public int indexOf(Object o) {
+		for(int i=0; i<size; i++) {
+			if(array[i].equals(o)) return i;
+		}
+		return -1;
+	}
+	
+	@Override
+	public String toString() {
+		return "ArrayList of size " + size;
+	}
+	
 	private boolean checkBounds(int index) {
 		return (index >= 0 && index < size);
-		
 	}
 }
