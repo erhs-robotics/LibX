@@ -282,7 +282,6 @@ public class ArrayList {
 		return indexOf(o) != -1;
 	}
 	
-	@Override
 	public String toString() {
 		return "ArrayList of size " + size;
 	}
