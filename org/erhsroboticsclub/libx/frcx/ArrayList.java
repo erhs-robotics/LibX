@@ -273,6 +273,15 @@ public class ArrayList {
 		return -1;
 	}
 	
+	/**
+	 * Uses a linear search to check for the existance of an object in the ArrayList
+	 * @param o the object to check for
+	 * @return true if the ArrayList contains the object. False if otherwise.
+	 */
+	public boolean contains(Object o) {
+		return indexOf(o) != -1;
+	}
+	
 	@Override
 	public String toString() {
 		return "ArrayList of size " + size;
